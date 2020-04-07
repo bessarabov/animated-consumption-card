@@ -65,7 +65,7 @@ class AnimatedConsumptionCard extends HTMLElement {
 
     this.content.innerHTML = `
 <style>
-      .bla_icon {
+      .acc_icon {
         height: 80px;
         width: 80px;
         border: 1px solid black;
@@ -74,39 +74,39 @@ class AnimatedConsumptionCard extends HTMLElement {
         color: black;
       }
 
-      .bla_text_container {
+      .acc_text_container {
         position: relative;
         left: 27px;
         top: -29px;
         width: 70px;
       }
 
-      .bla_text {
+      .acc_text {
         text-align: center;
       }
 
-.bla_td {
+.acc_td {
     vertical-align: top;
 }
 </style>
 
 <table style="border-collapse: collapse;">
 <tr>
-    <td class="bla_td">
+    <td class="acc_td">
         <div>
-              <ha-icon class="bla_icon" icon="mdi:electron-framework"></ha-icon>
+              <ha-icon class="acc_icon" icon="mdi:electron-framework"></ha-icon>
         </div>
     </td>
 
-    <td class="bla_td" style="width: 100%; padding-top: 50px;">
+    <td class="acc_td" style="width: 100%; padding-top: 50px;">
         ${svg}
     </td>
 
-    <td class="bla_td">
-        <div class="bla_icon_with_text">
-            <ha-icon class="bla_icon" icon="mdi:home"></ha-icon>
-            <div class="bla_text_container">
-                <div class="bla_text">${kWValue} kW</div>
+    <td class="acc_td">
+        <div class="acc_icon_with_text">
+            <ha-icon class="acc_icon" icon="mdi:home"></ha-icon>
+            <div class="acc_text_container">
+                <div class="acc_text">${kWValue} kW</div>
             </div>
         </div>
     </td>
