@@ -1,0 +1,20 @@
+title: Home
+views:
+  - title: Home
+    path: default_view
+    badges: []
+    cards:
+
+      - type: entities
+        entities:
+          - entity: input_number.input_number_1
+
+      - type: 'custom:animated-consumption-card'
+        entity: input_number.input_number_1
+
+      - type: entities
+        entities:
+          - entity: input_number.input_number_2
+
+      - type: 'custom:animated-consumption-card'
+        entity: input_number.input_number_2

@@ -1,0 +1,31 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+input_number:
+  input_number_1:
+    initial: 0.030
+    min: 0
+    max: 15
+    step: 0.001
+    unit_of_measurement: kW
+
+  input_number_2:
+    initial: 30
+    min: 0
+    max: 15000
+    step: 1
+    unit_of_measurement: W
