@@ -1,10 +1,7 @@
 class AnimatedConsumptionCard extends HTMLElement {
   set hass(hass) {
-    console.log('hass()');
 
     if (!this.content) {
-      console.log("!this.content");
-
       const card = document.createElement('ha-card');
       this.content = document.createElement('div');
       this.content.style.padding = '16px';
@@ -13,7 +10,6 @@ class AnimatedConsumptionCard extends HTMLElement {
     }
 
     const entityId = this.config.entity;
-    console.log(entityId);
     const state = hass.states[entityId];
     var valueStr = state ? state.state : 'unavailable';
 
@@ -121,7 +117,6 @@ class AnimatedConsumptionCard extends HTMLElement {
   }
 
   setConfig(config) {
-    console.log('setConfig()');
     if (!config.entity) {
       throw new Error('You need to define "entity"');
     }
