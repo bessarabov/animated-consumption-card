@@ -1,5 +1,8 @@
 class AnimatedConsumptionCard extends HTMLElement {
+
   set hass(hass) {
+
+    this.setValueAndUnit(hass);
 
     if (!this.content) {
       const card = document.createElement('ha-card');
@@ -10,37 +13,15 @@ class AnimatedConsumptionCard extends HTMLElement {
     }
 
     const entityId = this.config.entity;
-    const state = hass.states[entityId];
-    var valueStr = state ? state.state : 'unavailable';
-
-    const unit_of_measurement = state ? state.attributes.unit_of_measurement : '-';
-
-    var kWValue;
-
     const animatedElementId = "id_acc_" + entityId;
-
-    if (unit_of_measurement === 'kW') {
-      kWValue = valueStr * 1;
-    } else if (unit_of_measurement === 'W') {
-      kWValue = valueStr / 1000;
-    } else {
-      console.log('ERROR');
-    }
-
-    if (kWValue > 0.2) {
-      kWValue = Math.round(kWValue * 10) / 10
-    } else {
-      kWValue = Math.round(kWValue * 1000) / 1000
-    }
 
     var svg = '';
 
-    if (kWValue > 0) {
+    if (this.value > 0) {
 
         // if 15 then 0.2s
         // if 0.01 then 5s
-        //var duration = 0.3202 * kWValue + 0.1968;
-        var duration = -0.3202 * kWValue +5.0032;
+        var duration = -0.3202 * this.value +5.0032;
 
         svg = `
         <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="20px" viewBox="0 0 500 40">
@@ -106,7 +87,7 @@ class AnimatedConsumptionCard extends HTMLElement {
         <div class="acc_icon_with_text">
             <ha-icon class="acc_icon" icon="mdi:home"></ha-icon>
             <div class="acc_text_container">
-                <div class="acc_text">${kWValue} kW</div>
+                <div class="acc_text">${ this.value } ${ this.unit_of_measurement }</div>
             </div>
         </div>
     </td>
@@ -121,6 +102,37 @@ class AnimatedConsumptionCard extends HTMLElement {
       throw new Error('You need to define "entity"');
     }
     this.config = config;
+  }
+
+  setValueAndUnit(hass) {
+
+    var value;
+
+    const entityId = this.config.entity;
+    const state = hass.states[entityId];
+
+    if (state) {
+        var valueStr = state.state;
+        const unit_of_measurement = state.attributes.unit_of_measurement;
+
+        if (unit_of_measurement === 'kW') {
+          value = valueStr * 1;
+        } else if (unit_of_measurement === 'W') {
+          value = valueStr / 1000;
+        } else {
+          console.log('ERROR. This code can work only with entities that has unit_of_measurement "W" or "kW"');
+        }
+
+        if (value > 0.2) {
+          value = Math.round(value * 10) / 10
+        } else {
+          value = Math.round(value * 1000) / 1000
+        }
+    }
+
+    this.value = value;
+    this.unit_of_measurement = 'kW';
+
   }
 }
 
