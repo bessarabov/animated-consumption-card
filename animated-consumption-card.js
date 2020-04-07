@@ -13,12 +13,15 @@ class AnimatedConsumptionCard extends HTMLElement {
     }
 
     const entityId = this.config.entity;
+    console.log(entityId);
     const state = hass.states[entityId];
     var valueStr = state ? state.state : 'unavailable';
 
     const unit_of_measurement = state ? state.attributes.unit_of_measurement : '-';
 
     var kWValue;
+
+    const animatedElementId = "id_acc_" + entityId;
 
     if (unit_of_measurement === 'kW') {
       kWValue = valueStr * 1;
@@ -46,10 +49,10 @@ class AnimatedConsumptionCard extends HTMLElement {
         svg = `
         <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="20px" viewBox="0 0 500 40">
 
-            <circle id="bla_circle" r="10" cx="0" cy="20" stroke="#black" fill="green" />
+            <circle id="${animatedElementId}" r="10" cx="0" cy="20" stroke="#black" fill="green" />
 
             <animateTransform
-                xlink:href="#bla_circle"
+                xlink:href="#${animatedElementId}"
                 attributeName="transform"
                 type="translate"
                 from="0,0"
