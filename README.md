@@ -10,6 +10,6 @@ This is a repo with Home Assistant custom ui card `animated-consumption-card`.
  * Add card to your lovelace ui:
 
 ```
-  - type: 'custom:animated-consumption-card'
-    entity: sensor.total_power_consumption
+      - type: 'custom:animated-consumption-card'
+        entity: sensor.total_power_consumption
 ```
