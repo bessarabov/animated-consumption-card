@@ -18,3 +18,8 @@ views:
 
       - type: 'custom:animated-consumption-card'
         entity: input_number.input_number_2
+
+      - type: 'custom:animated-consumption-card'
+
+      - type: 'custom:animated-consumption-card'
+        entity: sun.sun

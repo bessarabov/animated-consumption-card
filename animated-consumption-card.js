@@ -11,10 +11,21 @@ class AnimatedConsumptionCard extends HTMLElement {
     }
 
     var prevValue = this.value;
-    this.setValueAndUnit(hass);
 
-    if (prevValue !== this.value) {
-      this.updateContent();
+    try {
+      this.setValueAndUnit(hass);
+      if (prevValue !== this.value) {
+        this.updateContent();
+      }
+    } catch (err) {
+      this.content.innerHTML = `
+      <div class="acc_error">
+        <b>${err}</b>
+        <br><br>
+        type: 'custom:animated-consumption-card'
+      </div>`;
+      this.content.style.backgroundColor = '#ff353d';
+      this.content.style.color = 'white';
     }
 
   }
@@ -42,7 +53,7 @@ class AnimatedConsumptionCard extends HTMLElement {
         } else if (unit_of_measurement === 'W') {
           value = valueStr / 1000;
         } else {
-          console.log('ERROR. This code can work only with entities that has unit_of_measurement "W" or "kW"');
+          throw new Error('This card can work only with entities that has unit_of_measurement "W" or "kW"');
         }
 
         if (value > 0.2) {
