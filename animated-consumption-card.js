@@ -70,22 +70,27 @@ class AnimatedConsumptionCard extends HTMLElement {
         var duration = -0.3202 * this.value +5.0032;
 
         svg = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="20px" viewBox="0 0 500 40">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="100%"
+            height="20px"
+            viewBox="0 0 500 40"
+            preserveAspectRatio="xMidYMid slice"
+            >
 
-            <circle id="${animatedElementId}" r="10" cx="0" cy="20" stroke="#black" fill="green" />
+            <circle id="${animatedElementId}" r="10" cx="0" cy="20" fill="#00a6f8"/>
 
             <animateTransform
                 xlink:href="#${animatedElementId}"
                 attributeName="transform"
                 type="translate"
                 from="0,0"
-                to="490,0"
+                to="500,0"
                 dur="${duration}s"
                 additive="replace"
                 fill="freeze"
                 repeatCount="indefinite"
             />
-
         </svg>
         `;
     }
