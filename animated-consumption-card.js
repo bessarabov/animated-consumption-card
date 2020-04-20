@@ -8,15 +8,16 @@ class AnimatedConsumptionCard extends HTMLElement {
       this.content.style.padding = '16px';
       card.appendChild(this.content);
       this.appendChild(card);
+
+      var obj = this;
+      requestAnimationFrame(function(timestamp){
+        obj.updateCircle(timestamp);
+      });
     }
 
-    var prevValue = this.value;
-
     try {
-      this.setValueAndUnit(hass);
-      if (prevValue !== this.value) {
-        this.updateContent();
-      }
+      this.updateProperties(hass);
+      this.updateContent();
     } catch (err) {
       this.content.innerHTML = `
       <div class="acc_error">
@@ -35,9 +36,14 @@ class AnimatedConsumptionCard extends HTMLElement {
       throw new Error('You need to define "entity"');
     }
     this.config = config;
+
+    this.speed = 0;
+    this.maxPosition = 500;
+
+    this.circle = `<circle r="10" cx="50" cy="20" fill="#00a6f8"/>`;
   }
 
-  setValueAndUnit(hass) {
+  updateProperties(hass) {
 
     var value;
 
@@ -66,43 +72,22 @@ class AnimatedConsumptionCard extends HTMLElement {
     this.value = value;
     this.unit_of_measurement = 'kW';
 
+    // value    speed
+    // 1kW      0.1
+    // 15kW     2
+    this.speed = this.value * 0.135714285714;
+
+    if (this.speed === 0) {
+      this.currentPosition = -10;
+    }
   }
 
   updateContent() {
     var svg = '';
 
     if (this.value > 0) {
-
-        const entityId = this.config.entity;
-        const animatedElementId = "id_acc_" + entityId;
-
-        // if 15 then 0.2s
-        // if 0.01 then 5s
-        var duration = -0.3202 * this.value +5.0032;
-
         svg = `
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="100%"
-            height="20px"
-            viewBox="0 0 500 40"
-            preserveAspectRatio="xMidYMid slice"
-            >
 
-            <circle id="${animatedElementId}" r="10" cx="0" cy="20" fill="#00a6f8"/>
-
-            <animateTransform
-                xlink:href="#${animatedElementId}"
-                attributeName="transform"
-                type="translate"
-                from="0,0"
-                to="500,0"
-                dur="${duration}s"
-                additive="replace"
-                fill="freeze"
-                repeatCount="indefinite"
-            />
-        </svg>
         `;
     }
 
@@ -143,7 +128,17 @@ class AnimatedConsumptionCard extends HTMLElement {
     </td>
 
     <td class="acc_td" style="width: 100%; padding-top: 50px;">
-        ${svg}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="100%"
+        height="20px"
+        viewBox="0 0 500 40"
+        preserveAspectRatio="xMidYMid slice"
+      >
+
+        ${this.circle}
+
+      </svg>
     </td>
 
     <td class="acc_td">
@@ -157,6 +152,36 @@ class AnimatedConsumptionCard extends HTMLElement {
 </tr>
 </table>
     `;
+  }
+
+  updateCircle(timestamp) {
+
+    if (this.currentPosition === undefined) {
+      this.currentPosition = -10;
+    }
+
+    if (this.prevTimestamp === undefined) {
+      this.prevTimestamp = timestamp;
+    }
+
+    var timePassed = timestamp - this.prevTimestamp;
+    var deltaPosition = this.speed * timePassed;
+    this.currentPosition += deltaPosition;
+
+    if (this.currentPosition > this.maxPosition) {
+        this.currentPosition = -10;
+    }
+
+    this.prevTimestamp = timestamp;
+
+    this.circle = `<circle r="10" cx="${this.currentPosition}" cy="20" fill="#00a6f8"/>`;
+
+    this.updateContent();
+
+    var obj = this;
+    requestAnimationFrame(function(timestamp){
+      obj.updateCircle(timestamp);
+    });
   }
 }
 
