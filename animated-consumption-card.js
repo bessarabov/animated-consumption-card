@@ -11,22 +11,18 @@ class AnimatedConsumptionCard extends HTMLElement {
       });
     }
 
-    this.updateProperties(hass);
-
-    return;
-
     try {
       this.updateProperties(hass);
-      this.updateContent();
     } catch (err) {
-      this.content.innerHTML = `
+      this.innerHTML = `
       <div class="acc_error">
         <b>${err}</b>
         <br><br>
         type: 'custom:animated-consumption-card'
       </div>`;
-      this.content.style.backgroundColor = '#ff353d';
-      this.content.style.color = 'white';
+      this.style.padding = '8px';
+      this.style.backgroundColor = '#ff353d';
+      this.style.color = 'white';
     }
 
   }
