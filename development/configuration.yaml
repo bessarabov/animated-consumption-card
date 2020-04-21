@@ -29,3 +29,18 @@ input_number:
     max: 15000
     step: 1
     unit_of_measurement: W
+
+input_boolean:
+  lamp:
+    icon: mdi:lightbulb
+  heater1:
+    icon: mdi:radiator
+  heater2:
+    icon: mdi:radiator
+
+sensor:
+  - platform: template
+    sensors:
+      total_power_consumption:
+        unit_of_measurement: 'W'
+        value_template: "{{ (100 if states('input_boolean.lamp') == 'on' else 0) + (1000 if states('input_boolean.heater1') ==  'on' else 0) + (1000 if states('input_boolean.heater2') ==  'on' else 0) }}"

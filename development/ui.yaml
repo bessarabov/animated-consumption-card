@@ -23,3 +23,20 @@ views:
 
       - type: 'custom:animated-consumption-card'
         entity: sun.sun
+
+  - title: aaa
+    path: aaa
+    badges: []
+    cards:
+      - type: 'custom:animated-consumption-card'
+        entity: sensor.total_power_consumption
+      - type: entities
+        entities:
+          - entity: input_boolean.lamp
+            name: Lamp (100 W)
+          - entity: input_boolean.heater1
+            name: Heater (1 kW)
+          - entity: input_boolean.heater2
+            name: Heater (1 kW)
+        show_header_toggle: false        
+
