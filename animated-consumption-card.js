@@ -96,7 +96,7 @@ class AnimatedConsumptionCard extends HTMLElement {
         width="100%"
         height="20px"
         viewBox="0 0 500 40"
-        preserveAspectRatio="xMidYMid slice"
+        preserveAspectRatio="xMinYMax slice"
       >
       </svg>
     </td>
