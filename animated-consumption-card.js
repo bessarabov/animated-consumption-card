@@ -2,18 +2,18 @@ class AnimatedConsumptionCard extends HTMLElement {
 
   set hass(hass) {
 
-    if (!this.content) {
-      const card = document.createElement('ha-card');
-      this.content = document.createElement('div');
-      this.content.style.padding = '16px';
-      card.appendChild(this.content);
-      this.appendChild(card);
+    if (!this.contentIsCreated) {
+      this.createContent();
 
       var obj = this;
       requestAnimationFrame(function(timestamp){
         obj.updateCircle(timestamp);
       });
     }
+
+    this.updateProperties(hass);
+
+    return;
 
     try {
       this.updateProperties(hass);
@@ -35,12 +35,99 @@ class AnimatedConsumptionCard extends HTMLElement {
     if (!config.entity) {
       throw new Error('You need to define "entity"');
     }
+
     this.config = config;
 
+    this.contentIsCreated = false;
+
     this.speed = 0;
+    this.startPosition = -10;
     this.maxPosition = 500;
 
-    this.circle = `<circle r="10" cx="50" cy="20" fill="#00a6f8"/>`;
+    this.value = 0;
+    this.unit_of_measurement = '';
+
+    this.accText = undefined;
+    this.accCircle = undefined;
+  }
+
+  createContent(hass) {
+    const card = document.createElement('ha-card');
+    var content = document.createElement('div');
+    content.style.padding = '16px';
+    card.appendChild(content);
+    this.appendChild(card);
+
+    content.innerHTML = `
+<style>
+
+.acc_icon {
+    height: 80px;
+    width: 80px;
+    border: 1px solid black;
+    border-radius: 100px;
+    padding: 22px;
+    color: black;
+}
+
+.acc_text_container {
+    position: relative;
+    left: 27px;
+    top: -29px;
+    width: 70px;
+}
+
+.acc_text {
+    text-align: center;
+}
+
+.acc_td {
+    vertical-align: top;
+}
+</style>
+
+<table style="border-collapse: collapse;" id='asdf'>
+<tr>
+    <td class="acc_td">
+        <div>
+              <ha-icon class="acc_icon" icon="mdi:electron-framework"></ha-icon>
+        </div>
+    </td>
+
+    <td class="acc_td" style="width: 100%; padding-top: 50px;">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="100%"
+        height="20px"
+        viewBox="0 0 500 40"
+        preserveAspectRatio="xMidYMid slice"
+      >
+      </svg>
+    </td>
+
+    <td class="acc_td">
+        <div class="acc_icon_with_text">
+            <ha-icon class="acc_icon" icon="mdi:home"></ha-icon>
+            <div class="acc_text_container">
+            </div>
+        </div>
+    </td>
+</tr>
+</table>
+    `;
+
+    this.accText = document.createElement('div');
+    this.accText.className = 'acc_text';
+    card.querySelectorAll(".acc_text_container").item(0).appendChild(this.accText);
+
+    this.accCircle = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
+    this.accCircle.setAttributeNS(null, "r", "10");
+    this.accCircle.setAttributeNS(null, "cx", this.startPosition);
+    this.accCircle.setAttributeNS(null, "cy", "20");
+    this.accCircle.setAttributeNS(null, "fill", "#00a6f8");
+    this.querySelectorAll("svg").item(0).appendChild(this.accCircle);
+
+    this.contentIsCreated = true;
   }
 
   updateProperties(hass) {
@@ -72,92 +159,22 @@ class AnimatedConsumptionCard extends HTMLElement {
     this.value = value;
     this.unit_of_measurement = 'kW';
 
+    this.accText.innerHTML = this.value + ' ' + this.unit_of_measurement;
+
     // value    speed
     // 1kW      0.1
     // 15kW     2
     this.speed = this.value * 0.135714285714;
 
     if (this.speed === 0) {
-      this.currentPosition = -10;
+      this.currentPosition = this.startPosition;
     }
-  }
-
-  updateContent() {
-    var svg = '';
-
-    if (this.value > 0) {
-        svg = `
-
-        `;
-    }
-
-    this.content.innerHTML = `
-<style>
-
-.acc_icon {
-    height: 80px;
-    width: 80px;
-    border: 1px solid black;
-    border-radius: 100px;
-    padding: 22px;
-    color: black;
-}
-
-.acc_text_container {
-    position: relative;
-    left: 27px;
-    top: -29px;
-    width: 70px;
-}
-
-.acc_text {
-    text-align: center;
-}
-
-.acc_td {
-    vertical-align: top;
-}
-</style>
-
-<table style="border-collapse: collapse;">
-<tr>
-    <td class="acc_td">
-        <div>
-              <ha-icon class="acc_icon" icon="mdi:electron-framework"></ha-icon>
-        </div>
-    </td>
-
-    <td class="acc_td" style="width: 100%; padding-top: 50px;">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="100%"
-        height="20px"
-        viewBox="0 0 500 40"
-        preserveAspectRatio="xMidYMid slice"
-      >
-
-        ${this.circle}
-
-      </svg>
-    </td>
-
-    <td class="acc_td">
-        <div class="acc_icon_with_text">
-            <ha-icon class="acc_icon" icon="mdi:home"></ha-icon>
-            <div class="acc_text_container">
-                <div class="acc_text">${ this.value } ${ this.unit_of_measurement }</div>
-            </div>
-        </div>
-    </td>
-</tr>
-</table>
-    `;
   }
 
   updateCircle(timestamp) {
 
     if (this.currentPosition === undefined) {
-      this.currentPosition = -10;
+      this.currentPosition = this.startPosition;
     }
 
     if (this.prevTimestamp === undefined) {
@@ -169,14 +186,12 @@ class AnimatedConsumptionCard extends HTMLElement {
     this.currentPosition += deltaPosition;
 
     if (this.currentPosition > this.maxPosition) {
-        this.currentPosition = -10;
+        this.currentPosition = this.startPosition;
     }
 
     this.prevTimestamp = timestamp;
 
-    this.circle = `<circle r="10" cx="${this.currentPosition}" cy="20" fill="#00a6f8"/>`;
-
-    this.updateContent();
+    this.accCircle.setAttributeNS(null, "cx", this.currentPosition);
 
     var obj = this;
     requestAnimationFrame(function(timestamp){
