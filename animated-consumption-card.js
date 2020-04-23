@@ -169,6 +169,10 @@ class AnimatedConsumptionCard extends HTMLElement {
 
   updateCircle(timestamp) {
 
+    if (this.clientWidth !== 0) {
+      this.maxPosition = 2 * this.clientWidth - 570;
+    }
+
     if (this.currentPosition === undefined) {
       this.currentPosition = this.startPosition;
     }
