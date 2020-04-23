@@ -38,5 +38,4 @@ views:
             name: Heater (1 kW)
           - entity: input_boolean.heater2
             name: Heater (1 kW)
-        show_header_toggle: false        
-
+        show_header_toggle: false
