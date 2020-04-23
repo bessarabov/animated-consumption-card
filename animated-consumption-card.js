@@ -157,10 +157,7 @@ class AnimatedConsumptionCard extends HTMLElement {
 
     this.accText.innerHTML = this.value + ' ' + this.unit_of_measurement;
 
-    // value    speed
-    // 1kW      0.1
-    // 15kW     2
-    this.speed = this.value * 0.135714285714;
+    this.speed = this.getSpeed(this.value);
 
     if (this.speed === 0) {
       this.currentPosition = this.startPosition;
@@ -198,6 +195,26 @@ class AnimatedConsumptionCard extends HTMLElement {
       obj.updateCircle(timestamp);
     });
   }
+
+  getSpeed(value) {
+
+    var speed = 0;
+
+    // I have found min & max speed that looks ok to me.
+    // And then I have calculated math function
+    // using the dots:
+    //
+    // value    speed
+    // 0.001    0.02
+    // 15       2
+
+    if (this.value > 0) {
+      speed = 0.1320 * this.value + 0.02;
+    }
+
+    return speed;
+  }
+
 }
 
 customElements.define('animated-consumption-card', AnimatedConsumptionCard);
