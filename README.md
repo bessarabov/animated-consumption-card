@@ -11,12 +11,30 @@ to this UI card. The sensor must have `unit_of_measurement` `W` or `kW`.
 
 ## Installation
 
+There are several ways, you can add this card to your Home Assistant.
+
+### Manual installation
+
  * Copy file `animated-consumption-card.js` to `/config/www/animated-consumption-card.js`
  * Check that you can see this file as http://hassio.local:8123/local/animated-consumption-card.js (restart HA if you can't)
  * Add `/local/animated-consumption-card.js` as `JavaScript Module` in HA config http://hassio.local:8123/config/lovelace/resources
- * Add card to your lovelace ui:
+
+### Installation with HACS
+
+If you use HACS, you can install this card with HACS (but HACS is not required,
+if you don't use HACS you can install this card using the steps described in the previous section)
+
+To install this card with HACS just use the standart HACS way to install
+cards from the custom GitHub repository.
+
+## Configuration
+
+When you have this card installed in your Home Assistant you can use it. Add to your
+lovelace ui:
 
 ```
       - type: 'custom:animated-consumption-card'
         entity: sensor.total_power_consumption
 ```
+
+The field `entity` is required. The `unit_of_measurement` of this entity must be `W` or `kW`.
