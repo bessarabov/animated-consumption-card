@@ -63,7 +63,8 @@ class AnimatedConsumptionCard extends HTMLElement {
     border: 1px solid black;
     border-radius: 100px;
     padding: 22px;
-    color: black;
+    color: var(--primary-text-color);
+    border-color: var(--primary-text-color);
 }
 
 .acc_text_container {
@@ -120,7 +121,7 @@ class AnimatedConsumptionCard extends HTMLElement {
     this.accCircle.setAttributeNS(null, "r", "10");
     this.accCircle.setAttributeNS(null, "cx", this.startPosition);
     this.accCircle.setAttributeNS(null, "cy", "20");
-    this.accCircle.setAttributeNS(null, "fill", "#00a6f8");
+    this.accCircle.setAttributeNS(null, "fill", "var(--primary-color)");
     this.querySelectorAll("svg").item(0).appendChild(this.accCircle);
 
     this.contentIsCreated = true;
