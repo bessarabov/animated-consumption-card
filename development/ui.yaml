@@ -11,6 +11,8 @@ views:
 
       - type: 'custom:animated-consumption-card'
         entity: input_number.input_number_1
+        left_icon: mdi:flash
+        right_icon: mdi:ceiling-light
 
       - type: entities
         entities:

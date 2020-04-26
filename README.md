@@ -38,3 +38,11 @@ lovelace ui:
 ```
 
 The field `entity` is required. The `unit_of_measurement` of this entity must be `W` or `kW`.
+
+There are also several configuration parameters. Thery are not required,
+but you can use it to customize the card.
+
+| Name | Default value | Description |
+| --- | --- | --- |
+| **left_icon** | `mdi:electron-framework` | Left icon in the card |
+| **right_icon** | `mdi:ceiling-light` | Right icon in the card |

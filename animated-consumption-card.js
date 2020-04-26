@@ -34,6 +34,16 @@ class AnimatedConsumptionCard extends HTMLElement {
 
     this.config = config;
 
+    this.leftIcon = 'mdi:electron-framework';
+    if (config.left_icon !== undefined) {
+      this.leftIcon = config.left_icon;
+    }
+
+    this.rightIcon = 'mdi:home';
+    if (config.right_icon !== undefined) {
+      this.rightIcon = config.right_icon;
+    }
+
     this.contentIsCreated = false;
 
     this.speed = 0;
@@ -87,7 +97,7 @@ class AnimatedConsumptionCard extends HTMLElement {
 <tr>
     <td class="acc_td">
         <div>
-              <ha-icon class="acc_icon" icon="mdi:electron-framework"></ha-icon>
+              <ha-icon class="acc_icon" icon="${ this.leftIcon }"></ha-icon>
         </div>
     </td>
 
@@ -104,7 +114,7 @@ class AnimatedConsumptionCard extends HTMLElement {
 
     <td class="acc_td">
         <div class="acc_icon_with_text">
-            <ha-icon class="acc_icon" icon="mdi:home"></ha-icon>
+            <ha-icon class="acc_icon" icon="${ this.rightIcon }"></ha-icon>
             <div class="acc_text_container">
             </div>
         </div>
