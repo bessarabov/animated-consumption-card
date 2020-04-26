@@ -46,3 +46,4 @@ but you can use it to customize the card.
 | --- | --- | --- |
 | **left_icon** | `mdi:electron-framework` | Left icon in the card |
 | **right_icon** | `mdi:ceiling-light` | Right icon in the card |
+| **show_line** | `false` | Showing a line between icons |

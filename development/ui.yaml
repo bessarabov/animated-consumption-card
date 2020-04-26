@@ -13,6 +13,7 @@ views:
         entity: input_number.input_number_1
         left_icon: mdi:flash
         right_icon: mdi:ceiling-light
+        show_line: true
 
       - type: entities
         entities:

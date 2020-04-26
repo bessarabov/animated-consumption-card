@@ -44,6 +44,11 @@ class AnimatedConsumptionCard extends HTMLElement {
       this.rightIcon = config.right_icon;
     }
 
+    this.showLine = false;
+    if (config.show_line) {
+      this.showLine = true;
+    }
+
     this.contentIsCreated = false;
 
     this.speed = 0;
@@ -63,6 +68,11 @@ class AnimatedConsumptionCard extends HTMLElement {
     content.style.padding = '16px';
     card.appendChild(content);
     this.appendChild(card);
+
+    var maybeALine = '';
+    if (this.showLine) {
+      maybeALine = `<line x1="0" y1="20" x2="500" y2="20" style="stroke:var(--primary-text-color);" />`;
+    }
 
     content.innerHTML = `
 <style>
@@ -109,6 +119,7 @@ class AnimatedConsumptionCard extends HTMLElement {
         viewBox="0 0 500 40"
         preserveAspectRatio="xMinYMax slice"
       >
+        ${maybeALine}
       </svg>
     </td>
 
