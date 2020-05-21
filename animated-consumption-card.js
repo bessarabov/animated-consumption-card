@@ -77,7 +77,7 @@ class AnimatedConsumptionCard extends HTMLElement {
     content.innerHTML = `
 <style>
 
-.acc_icon {
+.acc_container {
     height: 80px;
     width: 80px;
     border: 1px solid black;
@@ -85,6 +85,12 @@ class AnimatedConsumptionCard extends HTMLElement {
     padding: 22px;
     color: var(--primary-text-color);
     border-color: var(--primary-text-color);
+}
+
+.acc_icon {
+    --mdc-icon-size: 80px;
+    height: 80px;
+    width: 80px;
 }
 
 .acc_text_container {
@@ -106,7 +112,7 @@ class AnimatedConsumptionCard extends HTMLElement {
 <table style="border-collapse: collapse;" id='asdf'>
 <tr>
     <td class="acc_td">
-        <div>
+        <div class="acc_container">
               <ha-icon class="acc_icon" icon="${ this.leftIcon }"></ha-icon>
         </div>
     </td>
@@ -125,7 +131,9 @@ class AnimatedConsumptionCard extends HTMLElement {
 
     <td class="acc_td">
         <div class="acc_icon_with_text">
-            <ha-icon class="acc_icon" icon="${ this.rightIcon }"></ha-icon>
+            <div class="acc_container">
+                <ha-icon class="acc_icon" icon="${ this.rightIcon }"></ha-icon>
+            </div>
             <div class="acc_text_container">
             </div>
         </div>
