@@ -38,6 +38,7 @@ lovelace ui:
 ```
 
 The field `entity` is required. The `unit_of_measurement` of this entity must be `W` or `kW`.
+If not you can override it using the `override_unit_of_measurement` configuration parameter.
 
 There are also several configuration parameters. Thery are not required,
 but you can use it to customize the card.
@@ -47,3 +48,4 @@ but you can use it to customize the card.
 | **left_icon** | [`mdi:electron-framework`](https://mdi.bessarabov.com/icon/electron-framework) | Left icon in the card |
 | **right_icon** | [`mdi:home`](https://mdi.bessarabov.com/icon/home) | Right icon in the card |
 | **show_line** | `false` | Showing a line between icons |
+| **override_unit_of_measurement** | | Force the card to ignore the `unit_of_measurement` as provided by the entity and use this instead. Use `W` or `kW` |

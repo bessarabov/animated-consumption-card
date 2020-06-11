@@ -165,7 +165,7 @@ class AnimatedConsumptionCard extends HTMLElement {
 
     if (state) {
         var valueStr = state.state;
-        const unit_of_measurement = state.attributes.unit_of_measurement;
+        const unit_of_measurement = this.config.override_unit_of_measurement || state.attributes.unit_of_measurement;
 
         if (unit_of_measurement === 'kW') {
           value = valueStr * 1;
