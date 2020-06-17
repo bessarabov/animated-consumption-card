@@ -49,6 +49,11 @@ class AnimatedConsumptionCard extends HTMLElement {
       this.showLine = true;
     }
 
+    this.circleColor = "var(--primary-color)";
+    if (config.circle_color !== undefined) {
+      this.circleColor = config.circle_color;
+    }
+
     this.contentIsCreated = false;
 
     this.speed = 0;
@@ -150,7 +155,7 @@ class AnimatedConsumptionCard extends HTMLElement {
     this.accCircle.setAttributeNS(null, "r", "10");
     this.accCircle.setAttributeNS(null, "cx", this.startPosition);
     this.accCircle.setAttributeNS(null, "cy", "20");
-    this.accCircle.setAttributeNS(null, "fill", "var(--primary-color)");
+    this.accCircle.setAttributeNS(null, "fill", this.circleColor);
     this.querySelectorAll("svg").item(0).appendChild(this.accCircle);
 
     this.contentIsCreated = true;

@@ -21,6 +21,7 @@ views:
 
       - type: 'custom:animated-consumption-card'
         entity: input_number.input_number_2
+        circle_color: black
 
       - type: 'custom:animated-consumption-card'
 
