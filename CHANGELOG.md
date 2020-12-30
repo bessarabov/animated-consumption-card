@@ -1,5 +1,9 @@
 # animated-consumption-card
 
+## 1.4.0 (2020-12-30)
+
+ * Clicking on card open sensor details
+
 ## 1.3.0 (2020-06-17)
 
  * New card configuration option: `circle_color`
