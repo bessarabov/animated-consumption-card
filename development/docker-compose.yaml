@@ -1,6 +1,6 @@
 ha:
   container_name: ha
-  image: homeassistant/raspberrypi3-homeassistant:0.110.0
+  image: homeassistant/raspberrypi3-homeassistant:2020.12.2
   ports:
     - "8123:8123"
   volumes:
