@@ -114,7 +114,7 @@ class AnimatedConsumptionCard extends HTMLElement {
 }
 </style>
 
-<table style="border-collapse: collapse;" id='asdf'>
+<table style="border-collapse: collapse; cursor: pointer;" id="acc_table">
 <tr>
     <td class="acc_td">
         <div class="acc_container">
@@ -157,6 +157,18 @@ class AnimatedConsumptionCard extends HTMLElement {
     this.accCircle.setAttributeNS(null, "cy", "20");
     this.accCircle.setAttributeNS(null, "fill", this.circleColor);
     this.querySelectorAll("svg").item(0).appendChild(this.accCircle);
+
+    card.querySelector('#acc_table').addEventListener('click', event => {
+
+      const ev = new Event('hass-more-info', {
+        bubbles: true,
+        cancelable: true,
+        composed: true,
+      });
+      ev.detail = { entityId: this.config.entity };
+      this.dispatchEvent(ev);
+
+    });
 
     this.contentIsCreated = true;
   }
