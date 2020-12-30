@@ -47,4 +47,4 @@ but you can use it to customize the card.
 | **left_icon** | [`mdi:electron-framework`](https://mdi.bessarabov.com/icon/electron-framework) | Left icon in the card |
 | **right_icon** | [`mdi:home`](https://mdi.bessarabov.com/icon/home) | Right icon in the card |
 | **show_line** | `false` | Showing a line between icons |
-| **circle_color** | `var(--primary-color)` | Color of the moving cirle |
+| **circle_color** | `var(--primary-color)` | Color of the moving circle |
