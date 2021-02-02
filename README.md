@@ -32,7 +32,7 @@ cards from the custom GitHub repository.
 When you have this card installed in your Home Assistant you can use it. Add to your
 lovelace ui:
 
-```
+```yaml
       - type: 'custom:animated-consumption-card'
         entity: sensor.total_power_consumption
 ```
